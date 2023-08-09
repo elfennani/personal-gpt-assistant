@@ -1,11 +1,13 @@
 use rusqlite::{Connection, Error};
 use uuid::Uuid;
 
+#[derive(Debug)]
 pub struct Chat {
     pub id: String,
     pub title: String,
 }
 
+#[derive(Debug)]
 pub struct Message {
     id: String,
     pub content: String,

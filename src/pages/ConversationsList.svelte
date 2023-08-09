@@ -1,24 +1,13 @@
 <script lang="ts">
     import MessageIcon from "~icons/mdi/message-outline";
     import RightIcon from "~icons/mdi/chevron-right";
+    import DeleteIcon from "~icons/mdi/delete";
+    import EditIcon from "~icons/mdi/pencil";
     import { link } from "svelte-routing";
     import { Body } from "svelte-body";
     import { onMount } from "svelte";
     import { invoke } from "@tauri-apps/api/tauri";
-
-    /*
-        struct AppChat {
-            id: String,
-            title: String,
-            messages: Option<ChatCompletion>,
-        }
-    */
-
-    interface AppChat {
-        id: string;
-        title: string;
-        messages: string[];
-    }
+    import type AppChat from "../types/AppChat";
 
     let chats: AppChat[] | null = null;
 
@@ -48,16 +37,30 @@
     <ul class="">
         {#if chats}
             {#each chats as chat}
-                <li>
-                    <a
-                        class="p-4 block hover:bg-zinc-800"
-                        href={`/${chat.id}`}
-                        use:link
-                    >
+                <li class="flex hover:bg-zinc-800 items-center pr-4">
+                    <a class="p-4 block flex-1" href={`/${chat.id}`} use:link>
                         {chat.title}
                     </a>
+                    <div class="flex items-center">
+                        <a
+                            href="#edit"
+                            class="text-lg text-zinc-700 p-2 hover:text-zinc-100"
+                            title="Edit"
+                        >
+                            <EditIcon />
+                        </a>
+                        <a
+                            href="#delete"
+                            class="text-lg text-zinc-700 p-2 hover:text-zinc-100"
+                            title="Delete"
+                        >
+                            <DeleteIcon />
+                        </a>
+                    </div>
                 </li>
             {/each}
+        {:else}
+            <li>Loading...</li>
         {/if}
     </ul>
 </div>

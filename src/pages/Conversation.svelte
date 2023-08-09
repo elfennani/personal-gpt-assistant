@@ -4,14 +4,20 @@
     import Input from "../lib/Input.svelte";
     import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
+    import { invoke } from "@tauri-apps/api/tauri";
+    import type AppChat from "../types/AppChat";
 
     export let id: string = null;
 
-    onMount(() => {
-        // TODO: Implement chat creation
-        setTimeout(() => {
-            navigate("/hellothere", { replace: true });
-        }, 2000);
+    onMount(async () => {
+        if (!id) {
+            try {
+                const new_chat: AppChat = await invoke("new_chat");
+                navigate(`/${new_chat.id}`, { replace: true });
+            } catch (error) {
+                console.error(error);
+            }
+        }
     });
 </script>
 

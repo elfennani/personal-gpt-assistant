@@ -44,7 +44,11 @@ fn main() {
             chats: Default::default(),
         })
         .on_page_load(on_page_load)
-        .invoke_handler(tauri::generate_handler![get_chats, get_chat_messages])
+        .invoke_handler(tauri::generate_handler![
+            get_chats,
+            get_chat_messages,
+            new_chat
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -92,6 +96,8 @@ fn new_chat(app: Window, state: State<'_, AppState>) -> Result<AppChat, String> 
     let db = binding.as_ref().unwrap();
 
     let new_chat = Chat::new(db).map_err(|e| e.to_string())?;
+
+    println!("New chat: {:?}", new_chat);
 
     Ok(AppChat::from(new_chat))
 }
