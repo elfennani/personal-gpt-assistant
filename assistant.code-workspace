@@ -1,0 +1,19 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "Main Source"
+        },
+        {
+            "path": "./src",
+            "name": "Front End"
+        },
+        {
+            "path": "./src-tauri",
+            "name": "Back End"
+        }
+    ],
+    "settings": {
+        "svelte.enable-ts-plugin": true
+    }
+}
